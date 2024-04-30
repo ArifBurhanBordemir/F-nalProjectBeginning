@@ -1,0 +1,36 @@
+﻿@model List<Event>
+
+<!DOCTYPE html>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<html>
+<head>
+    <title>Sıralanmış Bloglar</title>
+</head>
+<body>
+    <h1>Sıralanmış Bloglar</h1>
+    <hr />
+
+    <table>
+        <thead>
+            <tr>
+                <th>Başlık</th>
+                <th>Okunma Sayısı</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var blog in Model)
+            {
+                <tr>
+                    <td>@blog.Title</td>
+                    <td>@blog.ReadCount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
