@@ -46,7 +46,7 @@
             @Html.DisplayNameFor(model => model.CetUser)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CetUser.Id)
+            @Html.DisplayFor(model => model.CetUser.Name)
         </dd>
     </dl>
 </div>
@@ -60,4 +60,20 @@
         </p>
     } *@
     <a asp-action="Index">Back to List</a>
+    <a asp-controller="Menus" asp-action="Create"><btn>Add menu</btn></a>
+</div>
+
+
+
+<div>
+    <h4>Event Menus</h4>
+    <hr />
+    <ul>
+        @foreach (var menu in Model.Menus)
+        {
+            <li>
+                <strong>@menu.Name</strong>: @menu.Description - Price: @menu.Price
+            </li>
+        }
+    </ul>
 </div>

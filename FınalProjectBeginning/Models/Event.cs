@@ -16,6 +16,9 @@ namespace FınalProjectBeginning.Models
 
             public int? ReadCount { get; set; } = 0;
 
+
+            public virtual List<Menu> Menus { get; set; } = new List<Menu>();
+
     }
 
 }

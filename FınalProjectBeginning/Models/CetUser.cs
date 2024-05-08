@@ -8,6 +8,12 @@ namespace FınalProjectBeginning.Models
             public string Surname { get; set; }
             public DateTime BirthDate { get; set; }
             public virtual List<Event> Events { get; set; } = new List<Event>();
+
+
+            //public virtual List<Takip_Takipçi> TakipEdenUserlar { get; set; }
+            //public virtual List<Takip_Takipçi> TakipEdilenKişiler { get; set; }
+
+
     }
 
 }

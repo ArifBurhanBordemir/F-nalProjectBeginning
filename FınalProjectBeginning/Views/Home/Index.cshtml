@@ -1,36 +1,69 @@
-﻿@model List<Event>
+﻿@model IEnumerable<FınalProjectBeginning.Models.Event>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<CetUser> SignInManager
+@{
+    ViewData["Title"] = "Sıralanmış Eventler";
+}
 
-<!DOCTYPE html>
+<h1>Sıralanmış Eventler or Ana Sayfa</h1>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
 
-<html>
-<head>
-    <title>Sıralanmış Bloglar</title>
-</head>
-<body>
-    <h1>Sıralanmış Bloglar</h1>
-    <hr />
-
-    <table>
-        <thead>
-            <tr>
-                <th>Başlık</th>
-                <th>Okunma Sayısı</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var blog in Model)
-            {
-                <tr>
-                    <td>@blog.Title</td>
-                    <td>@blog.ReadCount</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</body>
-</html>
+<table class="table text-white">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Body)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CetUser)
+            </th>
+            <th>Okunma Sayisi</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Body)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CetUser.Name)
+ 
+            </td>
+                <td>@Html.DisplayFor(modelItem => item.ReadCount)</td>
+                
+            <td>
+                    
+                <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-controller="Events" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-controller="Events" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

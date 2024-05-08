@@ -1,4 +1,4 @@
-using FınalProjectBeginning.Data;
+using FinalProjectBeginning.Data;
 using FınalProjectBeginning.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -71,31 +71,31 @@ namespace FınalProjectBeginning
                 }
 
             }
-            //using (var scope = app.Services.CreateScope())
-            //{
-            //    var userManager =
-            //        scope.ServiceProvider.GetRequiredService<UserManager<CetUser>>();
-            //    string email = "admin@gmail.com";
-            //    string password = "Test1234.";
+            using (var scope = app.Services.CreateScope())
+            {
+                var userManager =
+                    scope.ServiceProvider.GetRequiredService<UserManager<CetUser>>();
+                string email = "admin@gmail.com";
+                string password = "Test1234.";
 
-            //    if (await userManager.FindByEmailAsync(email) == null)
-            //    {
-            //        var user = new CetUser();
-            //        user.Email = email;
-            //        user.Name = email;
-            //        user.Surname = email;
-            //        user.BirthDate = DateTime.Now;
-            //        user.EmailConfirmed = true;
-            //        user.UserName = email;
-            //        await userManager.CreateAsync(user, password);
+                if (await userManager.FindByEmailAsync(email) == null)
+                {
+                    var user = new CetUser();
+                    user.Email = email;
+                    user.Name = email;
+                    user.Surname = email;
+                    user.BirthDate = DateTime.Now;
+                    user.EmailConfirmed = true;
+                    user.UserName = email;
+                    await userManager.CreateAsync(user, password);
 
-            //        await userManager.AddToRoleAsync(user, "Admin");
-            //    }
-                
+                    await userManager.AddToRoleAsync(user, "Admin");
+                }
 
-            //}
 
-            
+            }
+
+
 
             using (var scope = app.Services.CreateScope())
             {

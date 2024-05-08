@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FınalProjectBeginning.Migrations
 {
     /// <inheritdoc />
-    public partial class @in : Migration
+    public partial class @int : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -170,7 +170,8 @@ namespace FınalProjectBeginning.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EventDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EventLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CetUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CetUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ReadCount = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -179,8 +180,28 @@ namespace FınalProjectBeginning.Migrations
                         name: "FK_Events_AspNetUsers_CetUserId",
                         column: x => x.CetUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Menus",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    EventId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Menus", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Menus_Events_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Events",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -226,6 +247,11 @@ namespace FınalProjectBeginning.Migrations
                 name: "IX_Events_CetUserId",
                 table: "Events",
                 column: "CetUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Menus_EventId",
+                table: "Menus",
+                column: "EventId");
         }
 
         /// <inheritdoc />
@@ -247,10 +273,13 @@ namespace FınalProjectBeginning.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Events");
+                name: "Menus");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Events");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

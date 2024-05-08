@@ -1,4 +1,5 @@
-using FınalProjectBeginning.Data;
+using FinalProjectBeginning.Data;
+
 using FınalProjectBeginning.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

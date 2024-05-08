@@ -5,11 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using FınalProjectBeginning.Data;
+
 using FınalProjectBeginning.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Reflection.Metadata;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
+using System.Drawing;
+using FinalProjectBeginning.Data;
+
 
 namespace FınalProjectBeginning.Controllers
 {
@@ -39,6 +43,8 @@ namespace FınalProjectBeginning.Controllers
 
             var @event = await _context.Events
                 .Include(b => b.CetUser)
+                .Include(c=>c.Menus)
+                
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (@event == null)
             {
@@ -148,6 +154,10 @@ namespace FınalProjectBeginning.Controllers
             {
                 return NotFound();
             }
+            var userID = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
+            if (@event.CetUserId != userID) { return Unauthorized(); }
+
+
             ViewData["CetUserId"] = new SelectList(_context.Set<CetUser>(), "Id", "Id", @event.CetUserId);
             return View(@event);
         }
@@ -203,6 +213,8 @@ namespace FınalProjectBeginning.Controllers
             {
                 return NotFound();
             }
+            var userID = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
+            if (@event.CetUserId != userID) { return Unauthorized(); }
 
             return View(@event);
         }
@@ -226,5 +238,34 @@ namespace FınalProjectBeginning.Controllers
         {
             return _context.Events.Any(e => e.Id == id);
         }
+
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> AddMenu(int id, [Bind("Name,Description,Fee")] Menu menu)
+        //{
+        //    var @event = await _context.Events.FindAsync(id);
+        //    if (@event == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        // Eğer menü için etkinlik zaten belirlenmişse, ilişkilendirme yap
+        //        menu.EventId = id.ToString();
+
+        //        // Menüyü ekleyip kaydet
+        //        _context.Menus.Add(menu);
+        //        await _context.SaveChangesAsync();
+
+        //        return RedirectToAction(nameof(Details), new { id });
+        //    }
+
+        //    // ModelState geçersiz ise, etkinlik detaylarının olduğu sayfaya geri dön
+        //    return RedirectToAction(nameof(Details), new { id });
+        //}
+
+
     }
 }
