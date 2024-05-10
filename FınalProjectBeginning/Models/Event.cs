@@ -9,7 +9,11 @@ namespace FınalProjectBeginning.Models
             public string Body { get; set; }
             public DateTime CreatedDate { get; set; } = DateTime.Now;
             public DateTime EventDate { get; set; } 
-            public string EventLocation { get; set; }  
+            public string EventLocation { get; set; }
+
+
+            public string? ImageName { get; set; }
+
 
             public string? CetUserId { get; set; }
             public virtual CetUser? CetUser { get; set; }

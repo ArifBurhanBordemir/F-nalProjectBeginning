@@ -88,8 +88,21 @@ namespace FınalProjectBeginning.Controllers
         //    return View(@event);
         //}
 
-        public async Task<IActionResult> Create([Bind("Id,Title,Body,CreatedDate,EventDate,EventLocation,CetUserId")] Event @event)
+        public async Task<IActionResult> Create(IFormFile eventImage,[Bind("Id,Title,Body,CreatedDate,EventDate,EventLocation,CetUserId")] Event @event)
         {
+            var filename = eventImage.FileName;
+            var extension = Path.GetExtension(filename);
+            var newfilename = Guid.NewGuid().ToString().ToLower().Replace("-","")+ extension;
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", newfilename);
+
+            using (var stream = new FileStream(path, FileMode.CreateNew))
+            {
+                await eventImage.CopyToAsync(stream);
+            }
+            @event.ImageName = newfilename;
+            _context.Add(@event);
+
             @event.CreatedDate = DateTime.Now;
             var CetUser = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
             @event.CetUserId = CetUser.Id;
@@ -97,14 +110,14 @@ namespace FınalProjectBeginning.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
-            if (ModelState.IsValid)
-            {
-                _context.Add(@event);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CetUserId"] = new SelectList(_context.Users, "Id", "Id", @event.CetUserId);
-            return View(@event);
+            //if (ModelState.IsValid)
+            //{
+            //    _context.Add(@event);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //ViewData["CetUserId"] = new SelectList(_context.Users, "Id", "Id", @event.CetUserId);
+            //return View(@event);
         }
 
         ////public async Task<IActionResult> Create([Bind("Id,Title,Body,CreatedDate,CetUserId")] Blog blog)

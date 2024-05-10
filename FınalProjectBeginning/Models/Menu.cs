@@ -9,6 +9,9 @@ namespace FınalProjectBeginning.Models
         public string? Description { get; set; }
         public decimal Price { get; set; }
 
+
+        
+
         public int? EventId { get; set; }
         public virtual Event? Event { get; set; }
     }

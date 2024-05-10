@@ -35,6 +35,7 @@ else
             <th>
                 @Html.DisplayNameFor(model => model.EventLocation)
             </th>
+            <th></th>
             <th>
                 @Html.DisplayNameFor(model => model.CetUser)
             </th>
@@ -59,13 +60,34 @@ else
             <td>
                 @Html.DisplayFor(modelItem => item.EventLocation)
             </td>
+                <td>
+                
+                        @* @if (string.IsNullOrEmpty(item.ImageName)) *@
+                        
+                        <img src="~/images/@item.ImageName" width="60"/>
+                        @* <img src="~/images/hero-bg.jpg" alt=""></img> *@
+                        
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CetUser.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    @if (User.IsInRole("Restoran") && User.IsInRole("Admin")) 
+                    {
+                        @*  if ( item.CetUserId == userID)  *@
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Menus" asp-action="index">
+                            <btn>Participate</btn>
+                        </a>
+                   
+                        
+                        
+                    }
             </td>
         </tr>
 }
