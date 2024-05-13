@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<FınalProjectBeginning.Models.Event>
+
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<CetUser> SignInManager
 @{
@@ -36,6 +37,7 @@ else
                 @Html.DisplayNameFor(model => model.EventLocation)
             </th>
             <th></th>
+            <th></th>
             <th>
                 @Html.DisplayNameFor(model => model.CetUser)
             </th>
@@ -68,6 +70,12 @@ else
                         @* <img src="~/images/hero-bg.jpg" alt=""></img> *@
                         
                 </td>
+                <td>
+                    <form asp-controller="Events" asp-action="Participate" method="post">
+                        <input type="hidden" name="eventId" value="@item.Id" />
+                        <button type="submit">Katıl</button>
+                    </form>
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CetUser.Name)
             </td>
@@ -81,9 +89,26 @@ else
                     }
                     else
                     {
-                        <a asp-controller="Menus" asp-action="index">
-                            <btn>Participate</btn>
-                        </a>
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        @* <a asp-controller="Menus" asp-action="Details" asp-route-id ="@">Menu</a> *@
+                        
+                        @* @foreach (var menu in item.Menus)
+                        {
+                            <a asp-controller="Menus" asp-action="Details" asp-route-id="@menu.Id">Menu</a>
+                        } *@
+
+                       @*  @if (item.Menus != null && item.Menus.Any())
+                        {
+                            foreach (var menu in Model.Menus)
+                            {
+                                <a asp-controller="Menus" asp-action="Details" asp-route-id="@menu.Id">Menu</a>
+                            }
+                        }
+                        else
+                        {
+                            <p>Menü bulunamadı.</p>
+                        } *@
+                        
                    
                         
                         
@@ -93,3 +118,4 @@ else
 }
     </tbody>
 </table>
+

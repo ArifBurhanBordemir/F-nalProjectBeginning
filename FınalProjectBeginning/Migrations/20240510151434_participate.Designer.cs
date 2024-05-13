@@ -4,6 +4,7 @@ using FinalProjectBeginning.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FınalProjectBeginning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240510151434_participate")]
+    partial class participate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -191,29 +194,6 @@ namespace FınalProjectBeginning.Migrations
                     b.ToTable("Participates");
                 });
 
-            modelBuilder.Entity("FınalProjectBeginning.Models.Takip_Takipçi", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("TakipEdenUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("TakipEdilenKişiId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TakipEdenUserId");
-
-                    b.HasIndex("TakipEdilenKişiId");
-
-                    b.ToTable("Takip_Takipçis");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -386,21 +366,6 @@ namespace FınalProjectBeginning.Migrations
                     b.Navigation("Event");
                 });
 
-            modelBuilder.Entity("FınalProjectBeginning.Models.Takip_Takipçi", b =>
-                {
-                    b.HasOne("FınalProjectBeginning.Models.CetUser", "TakipEdenUser")
-                        .WithMany("TakipEdilenKişis")
-                        .HasForeignKey("TakipEdenUserId");
-
-                    b.HasOne("FınalProjectBeginning.Models.CetUser", "TakipEdilenKişi")
-                        .WithMany("TakipEdenUsers")
-                        .HasForeignKey("TakipEdilenKişiId");
-
-                    b.Navigation("TakipEdenUser");
-
-                    b.Navigation("TakipEdilenKişi");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -457,10 +422,6 @@ namespace FınalProjectBeginning.Migrations
                     b.Navigation("Events");
 
                     b.Navigation("Participates");
-
-                    b.Navigation("TakipEdenUsers");
-
-                    b.Navigation("TakipEdilenKişis");
                 });
 
             modelBuilder.Entity("FınalProjectBeginning.Models.Event", b =>

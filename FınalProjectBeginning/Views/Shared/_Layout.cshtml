@@ -85,7 +85,7 @@
             <nav class="navbar navbar-expand-lg custom_nav-container ">
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                     <span>
-                        Feane
+                        Food Tasting
                     </span>
                 </a>
 
@@ -170,7 +170,7 @@
                 </svg>
                         </a>
                         <form class="form-inline">
-                            <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
+                                <button asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </button>
                         </form>
@@ -204,11 +204,11 @@
         </main>             
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
+    @* <footer class="border-top footer text-muted">
+         <div class="container">
             &copy; 2024 - FınalProjectBeginning - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+        </div> 
+    </footer> *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

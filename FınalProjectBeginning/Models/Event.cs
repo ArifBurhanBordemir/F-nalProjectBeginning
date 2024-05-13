@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Hosting;
 
 namespace FınalProjectBeginning.Models
 {
@@ -22,6 +23,14 @@ namespace FınalProjectBeginning.Models
 
 
             public virtual List<Menu> Menus { get; set; } = new List<Menu>();
+
+
+
+            //public virtual ICollection<Participate> Participates { get; set; } = new List<Participate>();
+
+            //public List<CetUser> CetUsers { get; } = [];
+            //Navigation Properties
+            public List<Participate> Participates { get; set; }
 
     }
 

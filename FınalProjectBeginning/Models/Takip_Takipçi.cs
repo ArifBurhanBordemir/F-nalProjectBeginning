@@ -10,7 +10,6 @@ namespace FınalProjectBeginning.Models
         public int Id { get; set; } 
         [ForeignKey("TakipEdenUser")]
         public string? TakipEdenUserId { get; set; }
-
         public virtual CetUser TakipEdenUser { get; set; }
 
 

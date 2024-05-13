@@ -20,15 +20,19 @@ namespace FınalProjectBeginning.Controllers
     public class EventsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<CetUser> _userManager;
 
-        public EventsController(ApplicationDbContext context)
+        public EventsController(ApplicationDbContext context , UserManager<CetUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Events
         public async Task<IActionResult> Index()
+
         {
+            var events = await _context.Events.ToListAsync();
             var applicationDbContext = _context.Events.Include(b => b.CetUser);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -279,6 +283,34 @@ namespace FınalProjectBeginning.Controllers
         //    return RedirectToAction(nameof(Details), new { id });
         //}
 
+
+        [HttpPost]
+        public async Task<IActionResult> Participate(int eventId)
+        {
+            var @event = await _context.Events.FindAsync(eventId);
+            if (@event == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var participate = new Participate
+            {
+                CetUserId = user.Id,
+                EventId = @event.Id
+            };
+
+            _context.Participates.Add(participate);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+        
 
     }
 }
