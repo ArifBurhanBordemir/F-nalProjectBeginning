@@ -19,8 +19,16 @@ namespace FınalProjectBeginning.Models
 
         //Navigation Properties
         public List<Participate> Participates { get; set; }
-        public virtual ICollection<Takip_Takipçi> TakipEdenUsers { get; set; }
-        public virtual ICollection<Takip_Takipçi> TakipEdilenKişis { get; set; }
+        public virtual ICollection<Takip_Takipci> TakipEdenUsers { get; set; }
+        public virtual ICollection<Takip_Takipci> TakipEdilenKisis { get; set; }
+
+        //public virtual List<Evaluation> Evaluations { get; set; } = new List<Evaluation>();
+
+        public virtual List<Evaluation> Evaluations { get; set; } = new List<Evaluation>();
+        public virtual List<Post> Posts { get; set; } = new List<Post>();
+
+
+
 
 
 

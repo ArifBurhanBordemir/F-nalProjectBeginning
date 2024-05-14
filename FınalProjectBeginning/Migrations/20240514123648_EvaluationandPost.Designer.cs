@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FınalProjectBeginning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240508114431_int")]
-    partial class @int
+    [Migration("20240514123648_EvaluationandPost")]
+    partial class EvaluationandPost
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,6 +101,34 @@ namespace FınalProjectBeginning.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("FınalProjectBeginning.Models.Evaluation", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CetUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CetUserId");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("Evaluations");
+                });
+
             modelBuilder.Entity("FınalProjectBeginning.Models.Event", b =>
                 {
                     b.Property<int>("Id")
@@ -124,6 +152,9 @@ namespace FınalProjectBeginning.Migrations
 
                     b.Property<string>("EventLocation")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ReadCount")
@@ -166,6 +197,78 @@ namespace FınalProjectBeginning.Migrations
                     b.HasIndex("EventId");
 
                     b.ToTable("Menus");
+                });
+
+            modelBuilder.Entity("FınalProjectBeginning.Models.Participate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CetUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CetUserId");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("Participates");
+                });
+
+            modelBuilder.Entity("FınalProjectBeginning.Models.Post", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CetUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CetUserId");
+
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("FınalProjectBeginning.Models.Takip_Takipci", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("TakipEdenUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("TakipEdilenKisiId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TakipEdenUserId");
+
+                    b.HasIndex("TakipEdilenKisiId");
+
+                    b.ToTable("Takip_Takipcis");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -305,6 +408,21 @@ namespace FınalProjectBeginning.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("FınalProjectBeginning.Models.Evaluation", b =>
+                {
+                    b.HasOne("FınalProjectBeginning.Models.CetUser", "CetUser")
+                        .WithMany("Evaluations")
+                        .HasForeignKey("CetUserId");
+
+                    b.HasOne("FınalProjectBeginning.Models.Event", "Event")
+                        .WithMany("Evaluations")
+                        .HasForeignKey("EventId");
+
+                    b.Navigation("CetUser");
+
+                    b.Navigation("Event");
+                });
+
             modelBuilder.Entity("FınalProjectBeginning.Models.Event", b =>
                 {
                     b.HasOne("FınalProjectBeginning.Models.CetUser", "CetUser")
@@ -321,6 +439,47 @@ namespace FınalProjectBeginning.Migrations
                         .HasForeignKey("EventId");
 
                     b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("FınalProjectBeginning.Models.Participate", b =>
+                {
+                    b.HasOne("FınalProjectBeginning.Models.CetUser", "CetUser")
+                        .WithMany("Participates")
+                        .HasForeignKey("CetUserId");
+
+                    b.HasOne("FınalProjectBeginning.Models.Event", "Event")
+                        .WithMany("Participates")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CetUser");
+
+                    b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("FınalProjectBeginning.Models.Post", b =>
+                {
+                    b.HasOne("FınalProjectBeginning.Models.CetUser", "CetUser")
+                        .WithMany("Posts")
+                        .HasForeignKey("CetUserId");
+
+                    b.Navigation("CetUser");
+                });
+
+            modelBuilder.Entity("FınalProjectBeginning.Models.Takip_Takipci", b =>
+                {
+                    b.HasOne("FınalProjectBeginning.Models.CetUser", "TakipEdenUser")
+                        .WithMany("TakipEdilenKisis")
+                        .HasForeignKey("TakipEdenUserId");
+
+                    b.HasOne("FınalProjectBeginning.Models.CetUser", "TakipEdilenKisi")
+                        .WithMany("TakipEdenUsers")
+                        .HasForeignKey("TakipEdilenKisiId");
+
+                    b.Navigation("TakipEdenUser");
+
+                    b.Navigation("TakipEdilenKisi");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -376,12 +535,26 @@ namespace FınalProjectBeginning.Migrations
 
             modelBuilder.Entity("FınalProjectBeginning.Models.CetUser", b =>
                 {
+                    b.Navigation("Evaluations");
+
                     b.Navigation("Events");
+
+                    b.Navigation("Participates");
+
+                    b.Navigation("Posts");
+
+                    b.Navigation("TakipEdenUsers");
+
+                    b.Navigation("TakipEdilenKisis");
                 });
 
             modelBuilder.Entity("FınalProjectBeginning.Models.Event", b =>
                 {
+                    b.Navigation("Evaluations");
+
                     b.Navigation("Menus");
+
+                    b.Navigation("Participates");
                 });
 #pragma warning restore 612, 618
         }

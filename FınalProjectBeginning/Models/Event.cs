@@ -32,6 +32,11 @@ namespace FınalProjectBeginning.Models
             //Navigation Properties
             public List<Participate> Participates { get; set; }
 
+            //public virtual List<Evaluation> Evaluations { get; set; } = new List<Evaluation>();
+
+            public virtual List<Evaluation> Evaluations { get; set; } = new List<Evaluation> ();
+
+
     }
 
 }

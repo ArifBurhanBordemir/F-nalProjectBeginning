@@ -5,52 +5,42 @@
 namespace FınalProjectBeginning.Migrations
 {
     /// <inheritdoc />
-    public partial class participate : Migration
+    public partial class EvaluationandPost : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Participates",
+                name: "Posts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CetUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    EventId = table.Column<int>(type: "int", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CetUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Participates", x => x.Id);
+                    table.PrimaryKey("PK_Posts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Participates_AspNetUsers_CetUserId",
+                        name: "FK_Posts_AspNetUsers_CetUserId",
                         column: x => x.CetUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Participates_Events_EventId",
-                        column: x => x.EventId,
-                        principalTable: "Events",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Participates_CetUserId",
-                table: "Participates",
+                name: "IX_Posts_CetUserId",
+                table: "Posts",
                 column: "CetUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Participates_EventId",
-                table: "Participates",
-                column: "EventId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Participates");
+                name: "Posts");
         }
     }
 }

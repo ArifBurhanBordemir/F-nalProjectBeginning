@@ -98,6 +98,34 @@ namespace FınalProjectBeginning.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("FınalProjectBeginning.Models.Evaluation", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CetUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CetUserId");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("Evaluations");
+                });
+
             modelBuilder.Entity("FınalProjectBeginning.Models.Event", b =>
                 {
                     b.Property<int>("Id")
@@ -191,7 +219,33 @@ namespace FınalProjectBeginning.Migrations
                     b.ToTable("Participates");
                 });
 
-            modelBuilder.Entity("FınalProjectBeginning.Models.Takip_Takipçi", b =>
+            modelBuilder.Entity("FınalProjectBeginning.Models.Post", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CetUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CetUserId");
+
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("FınalProjectBeginning.Models.Takip_Takipci", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -202,16 +256,16 @@ namespace FınalProjectBeginning.Migrations
                     b.Property<string>("TakipEdenUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("TakipEdilenKişiId")
+                    b.Property<string>("TakipEdilenKisiId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TakipEdenUserId");
 
-                    b.HasIndex("TakipEdilenKişiId");
+                    b.HasIndex("TakipEdilenKisiId");
 
-                    b.ToTable("Takip_Takipçis");
+                    b.ToTable("Takip_Takipcis");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -351,6 +405,21 @@ namespace FınalProjectBeginning.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("FınalProjectBeginning.Models.Evaluation", b =>
+                {
+                    b.HasOne("FınalProjectBeginning.Models.CetUser", "CetUser")
+                        .WithMany("Evaluations")
+                        .HasForeignKey("CetUserId");
+
+                    b.HasOne("FınalProjectBeginning.Models.Event", "Event")
+                        .WithMany("Evaluations")
+                        .HasForeignKey("EventId");
+
+                    b.Navigation("CetUser");
+
+                    b.Navigation("Event");
+                });
+
             modelBuilder.Entity("FınalProjectBeginning.Models.Event", b =>
                 {
                     b.HasOne("FınalProjectBeginning.Models.CetUser", "CetUser")
@@ -386,19 +455,28 @@ namespace FınalProjectBeginning.Migrations
                     b.Navigation("Event");
                 });
 
-            modelBuilder.Entity("FınalProjectBeginning.Models.Takip_Takipçi", b =>
+            modelBuilder.Entity("FınalProjectBeginning.Models.Post", b =>
+                {
+                    b.HasOne("FınalProjectBeginning.Models.CetUser", "CetUser")
+                        .WithMany("Posts")
+                        .HasForeignKey("CetUserId");
+
+                    b.Navigation("CetUser");
+                });
+
+            modelBuilder.Entity("FınalProjectBeginning.Models.Takip_Takipci", b =>
                 {
                     b.HasOne("FınalProjectBeginning.Models.CetUser", "TakipEdenUser")
-                        .WithMany("TakipEdilenKişis")
+                        .WithMany("TakipEdilenKisis")
                         .HasForeignKey("TakipEdenUserId");
 
-                    b.HasOne("FınalProjectBeginning.Models.CetUser", "TakipEdilenKişi")
+                    b.HasOne("FınalProjectBeginning.Models.CetUser", "TakipEdilenKisi")
                         .WithMany("TakipEdenUsers")
-                        .HasForeignKey("TakipEdilenKişiId");
+                        .HasForeignKey("TakipEdilenKisiId");
 
                     b.Navigation("TakipEdenUser");
 
-                    b.Navigation("TakipEdilenKişi");
+                    b.Navigation("TakipEdilenKisi");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -454,17 +532,23 @@ namespace FınalProjectBeginning.Migrations
 
             modelBuilder.Entity("FınalProjectBeginning.Models.CetUser", b =>
                 {
+                    b.Navigation("Evaluations");
+
                     b.Navigation("Events");
 
                     b.Navigation("Participates");
 
+                    b.Navigation("Posts");
+
                     b.Navigation("TakipEdenUsers");
 
-                    b.Navigation("TakipEdilenKişis");
+                    b.Navigation("TakipEdilenKisis");
                 });
 
             modelBuilder.Entity("FınalProjectBeginning.Models.Event", b =>
                 {
+                    b.Navigation("Evaluations");
+
                     b.Navigation("Menus");
 
                     b.Navigation("Participates");

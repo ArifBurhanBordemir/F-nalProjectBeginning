@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FınalProjectBeginning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240510151434_participate")]
-    partial class participate
+    [Migration("20240514120950_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -194,6 +194,29 @@ namespace FınalProjectBeginning.Migrations
                     b.ToTable("Participates");
                 });
 
+            modelBuilder.Entity("FınalProjectBeginning.Models.Takip_Takipci", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("TakipEdenUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("TakipEdilenKisiId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TakipEdenUserId");
+
+                    b.HasIndex("TakipEdilenKisiId");
+
+                    b.ToTable("Takip_Takipcis");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -366,6 +389,21 @@ namespace FınalProjectBeginning.Migrations
                     b.Navigation("Event");
                 });
 
+            modelBuilder.Entity("FınalProjectBeginning.Models.Takip_Takipci", b =>
+                {
+                    b.HasOne("FınalProjectBeginning.Models.CetUser", "TakipEdenUser")
+                        .WithMany("TakipEdilenKisis")
+                        .HasForeignKey("TakipEdenUserId");
+
+                    b.HasOne("FınalProjectBeginning.Models.CetUser", "TakipEdilenKisi")
+                        .WithMany("TakipEdenUsers")
+                        .HasForeignKey("TakipEdilenKisiId");
+
+                    b.Navigation("TakipEdenUser");
+
+                    b.Navigation("TakipEdilenKisi");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -422,6 +460,10 @@ namespace FınalProjectBeginning.Migrations
                     b.Navigation("Events");
 
                     b.Navigation("Participates");
+
+                    b.Navigation("TakipEdenUsers");
+
+                    b.Navigation("TakipEdilenKisis");
                 });
 
             modelBuilder.Entity("FınalProjectBeginning.Models.Event", b =>

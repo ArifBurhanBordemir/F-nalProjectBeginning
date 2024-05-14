@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FınalProjectBeginning.Migrations
 {
     /// <inheritdoc />
-    public partial class @int : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -170,6 +170,7 @@ namespace FınalProjectBeginning.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EventDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EventLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CetUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ReadCount = table.Column<int>(type: "int", nullable: true)
                 },
@@ -179,6 +180,30 @@ namespace FınalProjectBeginning.Migrations
                     table.ForeignKey(
                         name: "FK_Events_AspNetUsers_CetUserId",
                         column: x => x.CetUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Takip_Takipcis",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TakipEdilenKisiId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    TakipEdenUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Takip_Takipcis", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Takip_Takipcis_AspNetUsers_TakipEdenUserId",
+                        column: x => x.TakipEdenUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Takip_Takipcis_AspNetUsers_TakipEdilenKisiId",
+                        column: x => x.TakipEdilenKisiId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
@@ -202,6 +227,31 @@ namespace FınalProjectBeginning.Migrations
                         column: x => x.EventId,
                         principalTable: "Events",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Participates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CetUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    EventId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Participates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Participates_AspNetUsers_CetUserId",
+                        column: x => x.CetUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Participates_Events_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Events",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -252,6 +302,26 @@ namespace FınalProjectBeginning.Migrations
                 name: "IX_Menus_EventId",
                 table: "Menus",
                 column: "EventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Participates_CetUserId",
+                table: "Participates",
+                column: "CetUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Participates_EventId",
+                table: "Participates",
+                column: "EventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Takip_Takipcis_TakipEdenUserId",
+                table: "Takip_Takipcis",
+                column: "TakipEdenUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Takip_Takipcis_TakipEdilenKisiId",
+                table: "Takip_Takipcis",
+                column: "TakipEdilenKisiId");
         }
 
         /// <inheritdoc />
@@ -274,6 +344,12 @@ namespace FınalProjectBeginning.Migrations
 
             migrationBuilder.DropTable(
                 name: "Menus");
+
+            migrationBuilder.DropTable(
+                name: "Participates");
+
+            migrationBuilder.DropTable(
+                name: "Takip_Takipcis");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
