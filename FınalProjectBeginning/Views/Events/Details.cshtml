@@ -60,7 +60,8 @@
         </p>
     } *@
     <a asp-action="Index">Back to List</a>
-    <a asp-controller="Menus" asp-action="Create"><btn>Add menu</btn></a>
+    <a href="~/menus/create?eventid=@Model.Id"><btn>Add menu</btn></a>
+    <a href="~/Evaluations/create?eventid=@Model.Id"><btn>Add evaluation</btn></a>
  
 </div>
 

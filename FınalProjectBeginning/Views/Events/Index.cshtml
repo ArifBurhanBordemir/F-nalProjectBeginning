@@ -18,104 +18,48 @@ else
 {
     <p>To Create a event, you must be corrected via Restoran</p>
 }
-<table class="table text-white">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Body)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EventDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EventLocation)
-            </th>
-            <th></th>
-            <th></th>
-            <th>
-                @Html.DisplayNameFor(model => model.CetUser)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Body)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventLocation)
-            </td>
-                <td>
-                
-                        @* @if (string.IsNullOrEmpty(item.ImageName)) *@
-                        
-                        <img src="~/images/@item.ImageName" width="60"/>
-                        @* <img src="~/images/hero-bg.jpg" alt=""></img> *@
-                        
-                </td>
-                <td>
-                    <form asp-controller="Events" asp-action="Participate" method="post">
-                        <input type="hidden" name="eventId" value="@item.Id" />
-                        <button type="submit">Katıl</button>
-                    </form>
-                </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CetUser.Name)
-            </td>
-            <td>
-                    @if (User.IsInRole("Restoran") && User.IsInRole("Admin")) 
-                    {
-                        @*  if ( item.CetUserId == userID)  *@
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    }
-                    else
-                    {
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                        @* <a asp-controller="Menus" asp-action="Details" asp-route-id ="@">Menu</a> *@
-                        
-                        @* @foreach (var menu in item.Menus)
-                        {
-                            <a asp-controller="Menus" asp-action="Details" asp-route-id="@menu.Id">Menu</a>
-                        } *@
 
-                       @*  @if (item.Menus != null && item.Menus.Any())
-                        {
-                            foreach (var menu in Model.Menus)
-                            {
-                                <a asp-controller="Menus" asp-action="Details" asp-route-id="@menu.Id">Menu</a>
-                            }
-                        }
-                        else
-                        {
-                            <p>Menü bulunamadı.</p>
-                        } *@
-                        
-                   
-                        
-                        
-                    }
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+
+<section class="food_section layout_padding">
+    <div class="container">
+        @* <div class="heading_container heading_center">
+            
+        </div> *@
+        <div class="filters-content">
+            <div class="row grid">
+                @foreach (var item in Model)
+                {
+
+                    <div class="col-sm-6 col-lg-4 all pizza">
+                        <div class="box">
+                            <div>
+                                <div class="img-box">
+                                    <a asp-controller="Events" asp-action="Details" asp-route-id="@item.Id">
+                                        <img src="images/@item.ImageName" alt="">
+                                    </a>
+                                </div>
+                                <div class="detail-box">
+                                    <h5>
+                                        @item.Title
+                                    </h5>
+                                    <p>
+                                        @item.Body
+                                    </p>
+                                    <div>
+
+                                        
+                                        <btn>Katil</btn>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
 

@@ -46,9 +46,9 @@ namespace FınalProjectBeginning.Controllers
         }
 
         // GET: Menus/Create
-        public IActionResult Create()
+        public IActionResult Create(int? eventId)
         {
-            ViewData["EventId"] = new SelectList(_context.Events, "Id", "Title");
+            ViewData["EventId"] = new SelectList(_context.Events, "Id", "Id",eventId);
 
             return View();
         }

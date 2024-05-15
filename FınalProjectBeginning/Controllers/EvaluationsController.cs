@@ -48,10 +48,10 @@ namespace FınalProjectBeginning.Controllers
         }
 
         // GET: Evaluations/Create
-        public IActionResult Create()
+        public IActionResult Create(int? eventId)
         {
             ViewData["CetUserId"] = new SelectList(_context.CetUsers, "Id", "Id");
-            ViewData["EventId"] = new SelectList(_context.Events, "Id", "Id");
+            ViewData["EventId"] = new SelectList(_context.Events, "Id", "Id",eventId);
             return View();
         }
 
