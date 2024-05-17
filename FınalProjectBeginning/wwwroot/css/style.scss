@@ -8,24 +8,16 @@ $textCol: #1f1f1f;
 
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap');
 
-#_LoginPartial .nav-link {
-    color: #ff0000; /* Kýrmýzý renk */
-}
-body {
-    color: white; /* Tüm body içeriðinin metin rengini beyaz yapar */
-}
-main role="main" .container {
-    color: white; /* RenderBody içeriðinin metin rengini beyaz yapar */
-}
+/*.owl-nav,
+.owl-dots {
+    display: block;*/ /* Öðeleri görünür hale getir */
+/*}
 
-table {
-    color: white; /* Tüm tablolardaki metin rengini beyaz yapar */
+.owl-nav.disabled,
+.owl-dots.disabled {
+    display: none;*/ /* Öðeleri gizle */
+/*}*/
 
-
-}
-
-.table .text-white {
-    color: white; /* Tablo içindeki metinlerin rengini beyaz yapar */}
 
     @mixin main-font {
         font-family: "Open Sans", sans-serif;
@@ -57,7 +49,7 @@ table {
     body {
         @include main-font;
         color: #0c0c0c;
-        background-color: #ffffff;
+        background-color: black;
         overflow-x: hidden;
     }
 
@@ -139,6 +131,7 @@ table {
         min-height: 100vh;
         display: flex;
         flex-direction: column;
+        background-color:black
     }
 
     .bg-box {
@@ -417,7 +410,7 @@ table {
                 height: 175px;
                 margin-right: 15px;
                 position: relative;
-                transition: all .1.5s;
+                transition: all 1.5s;
                 border-radius: 100%;
                 border: 5px solid $primary1;
                 overflow: hidden;

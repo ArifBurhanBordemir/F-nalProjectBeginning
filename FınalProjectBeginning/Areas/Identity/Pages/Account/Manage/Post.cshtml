@@ -1,9 +1,5 @@
 ﻿@model IEnumerable<FınalProjectBeginning.Models.CetUser>
 
-@{
-	ViewData["Title"] = "Home Page";
-}
-
 
 <main>
 	<div class="container">
@@ -13,7 +9,7 @@
 			</div>
 			<div class="col-md-9 p-t-2">
 				<h2 class="h2-responsive">janedoe <button type="button" class="btn btn-info-outline waves-effect">Follow</button></h2>
-				<p>@User.Identity.Name @ViewBag.Name</p>
+				<p>Jane Doe @User.Identity.Name @ViewBag.UserName</p>
 
 				<ul class="flex-menu">
 					<li><strong>41</strong> posts</li>

@@ -18,8 +18,11 @@ else
 {
     <p>To Create a event, you must be corrected via Restoran</p>
 }
+@* 
+<div class="bg-box">
+    <img src="~/images/hero-bg.jpg" alt=""></img>
 
-
+</div> *@
 
 <section class="food_section layout_padding">
     <div class="container">
@@ -42,6 +45,7 @@ else
                                 <div class="detail-box">
                                     <h5>
                                         @item.Title
+                                        @item.CetUser.Name
                                     </h5>
                                     <p>
                                         @item.Body

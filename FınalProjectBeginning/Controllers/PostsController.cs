@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProjectBeginning.Data;
 using FınalProjectBeginning.Models;
+using Microsoft.SqlServer.Management.XEvent;
 
 namespace FınalProjectBeginning.Controllers
 {
@@ -57,8 +58,27 @@ namespace FınalProjectBeginning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,CetUserId")] Post post)
+        public async Task<IActionResult> Create(IFormFile postImage,[Bind("Id,Title,Description,CetUserId")] Post post)
         {
+            var filename = postImage.FileName;
+            var extension = Path.GetExtension(filename);
+            var newfilename = Guid.NewGuid().ToString().ToLower().Replace("-", "") + extension;
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", newfilename);
+
+            using (var stream = new FileStream(path, FileMode.CreateNew))
+            {
+                await postImage.CopyToAsync(stream);
+            }
+            post.ImageName = newfilename;
+            _context.Add(post);
+
+            var CetUser = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            post.CetUserId = CetUser.Id;
+            _context.Posts.Add(post);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
             if (ModelState.IsValid)
             {
                 _context.Add(post);
@@ -160,5 +180,6 @@ namespace FınalProjectBeginning.Controllers
         {
             return _context.Posts.Any(e => e.Id == id);
         }
+        
     }
 }

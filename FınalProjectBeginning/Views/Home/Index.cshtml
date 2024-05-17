@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<FınalProjectBeginning.Models.Event>
+
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<CetUser> SignInManager
 @{
@@ -7,6 +8,10 @@
 
 <h1>Sıralanmış Eventler or Ana Sayfa</h1>
 
+@* <div class="bg-box">
+    <img src="~/images/hero-bg.jpg" alt=""></img>
+
+</div> *@
 
 <table class="table text-white">
     <thead>
@@ -89,6 +94,9 @@
                                     <h5>
                                     @item.Title
                                     </h5>
+                                    <h4>
+                                        @item.CetUser.Name
+                                    </h4>
                                     <p>
                                         @item.Body
                                     </p>
@@ -96,6 +104,11 @@
                                         
                                         <a href="~/Evaluations/create?eventid=@item.Id"><btn>Add evaluation</btn></a>
                                         <btn>Katil</btn>
+                                        @* <a></a>
+                                        <form asp-controller="Events" asp-action="Participate" method="post">
+                                            <input type="hidden" name="eventId" value="@item.Id" />
+                                            <button type="submit">Katıl</button>
+                                        </form> *@
                                         
                                        
                                     </div>
