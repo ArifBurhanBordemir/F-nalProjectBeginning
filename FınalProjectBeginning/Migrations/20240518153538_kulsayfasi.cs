@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FınalProjectBeginning.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class kulsayfasi : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -185,6 +185,47 @@ namespace FınalProjectBeginning.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Kulsayfasis",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ImageName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CetUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Kulsayfasis", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Kulsayfasis_AspNetUsers_CetUserId",
+                        column: x => x.CetUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Posts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CetUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Posts_AspNetUsers_CetUserId",
+                        column: x => x.CetUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Takip_Takipcis",
                 columns: table => new
                 {
@@ -205,6 +246,32 @@ namespace FınalProjectBeginning.Migrations
                         name: "FK_Takip_Takipcis_AspNetUsers_TakipEdilenKisiId",
                         column: x => x.TakipEdilenKisiId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Evaluations",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Like = table.Column<bool>(type: "bit", nullable: false),
+                    CetUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    EventId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Evaluations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Evaluations_AspNetUsers_CetUserId",
+                        column: x => x.CetUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Evaluations_Events_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Events",
                         principalColumn: "Id");
                 });
 
@@ -294,8 +361,23 @@ namespace FınalProjectBeginning.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Evaluations_CetUserId",
+                table: "Evaluations",
+                column: "CetUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Evaluations_EventId",
+                table: "Evaluations",
+                column: "EventId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Events_CetUserId",
                 table: "Events",
+                column: "CetUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Kulsayfasis_CetUserId",
+                table: "Kulsayfasis",
                 column: "CetUserId");
 
             migrationBuilder.CreateIndex(
@@ -312,6 +394,11 @@ namespace FınalProjectBeginning.Migrations
                 name: "IX_Participates_EventId",
                 table: "Participates",
                 column: "EventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_CetUserId",
+                table: "Posts",
+                column: "CetUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Takip_Takipcis_TakipEdenUserId",
@@ -343,10 +430,19 @@ namespace FınalProjectBeginning.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Evaluations");
+
+            migrationBuilder.DropTable(
+                name: "Kulsayfasis");
+
+            migrationBuilder.DropTable(
                 name: "Menus");
 
             migrationBuilder.DropTable(
                 name: "Participates");
+
+            migrationBuilder.DropTable(
+                name: "Posts");
 
             migrationBuilder.DropTable(
                 name: "Takip_Takipcis");

@@ -52,7 +52,7 @@
                 <img src="https://mdbootstrap.com/images/avatars/img%20(1).jpg" alt="" class="img-circle img-fluid">
             </div>
             <div class="col-md-9 p-t-2">
-                <h2 class="h2-responsive">janedoe <button type="button" class="btn btn-info-outline waves-effect">Follow</button></h2>
+                <h2 class="h2-responsive"> <button type="button" class="btn btn-info-outline waves-effect text-white">Follow</button></h2>
                 <p>@User.Identity.Name @ViewBag.Name</p>
 
                 <ul class="flex-menu">
@@ -62,33 +62,34 @@
                 </ul>
             </div>
         </div>
-<section class="food_section layout_padding">
-    <div class="container">
-       
-        <div class="filters-content">
-            <div class="row grid">
-                @foreach (var item in Model)
-                {
-                    <div class="col-sm-6 col-lg-4 all pizza">
-                        <div class="box">
-                            <div>
-                                @* <div class="img-box">
+        <section class="food_section layout_padding">
+            <div class="container">
+
+                <div class="filters-content">
+                    <div class="row grid">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-sm-6 col-lg-4 all pizza">
+                                <div class="box">
+                                    <div>
+                                        @* <div class="img-box">
                                     <a asp-controller="Posts" asp-action="Details" asp-route-id="@item.Id">
-                                        <img src="images/@item.ImageName" alt="" >
-                                    </a>
-                                </div> *@
+                                    <img src="images/@item.ImageName" alt="" >
+                                    </a> *@
                                         <a asp-controller="Posts" asp-action="Details" asp-route-id="@item.Id">
-                                            <img src="images/@item.ImageName" alt="">
+                                            <img src="images/@item.ImageName" width="350" alt="">
                                         </a>
+                                    </div>
+
+                                </div>
                             </div>
-                        </div>
+
+
+                        }
+
                     </div>
-
-
-                }
+                </div>
             </div>
-        </div>
+        </section>
     </div>
-</section>
-</div>
 </main>

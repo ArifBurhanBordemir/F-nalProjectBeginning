@@ -26,6 +26,7 @@ namespace FinalProjectBeginning.Data
 
         public DbSet<Evaluation> Evaluations { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Kulsayfasi> Kulsayfasis { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

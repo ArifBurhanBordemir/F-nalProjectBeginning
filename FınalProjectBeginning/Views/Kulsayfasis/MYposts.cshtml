@@ -1,0 +1,22 @@
+﻿@model List<FınalProjectBeginning.Models.Post>
+
+<h1>My Posts</h1>
+
+@if (!Model.Any())
+{
+    <p>You have no posts.</p>
+}
+else
+{
+    <ul>
+        @foreach (var post in Model)
+        {
+            <li>
+                <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id">
+                    <img src="~/images/@post.ImageName" alt="Post Image" style="width:100px;height:auto;" />
+                    @post.Title
+                </a>
+            </li>
+        }
+    </ul>
+}

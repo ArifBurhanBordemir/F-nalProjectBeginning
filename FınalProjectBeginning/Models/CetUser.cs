@@ -26,6 +26,9 @@ namespace FınalProjectBeginning.Models
 
         public virtual List<Evaluation> Evaluations { get; set; } = new List<Evaluation>();
         public virtual List<Post> Posts { get; set; } = new List<Post>();
+        public virtual List<Kulsayfasi> Kulsayfasis { get; set; } = new List<Kulsayfasi>();
+
+
 
 
 

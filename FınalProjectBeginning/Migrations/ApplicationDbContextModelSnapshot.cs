@@ -171,6 +171,32 @@ namespace FınalProjectBeginning.Migrations
                     b.ToTable("Events");
                 });
 
+            modelBuilder.Entity("FınalProjectBeginning.Models.Kulsayfasi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CetUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CetUserId");
+
+                    b.ToTable("Kulsayfasis");
+                });
+
             modelBuilder.Entity("FınalProjectBeginning.Models.Menu", b =>
                 {
                     b.Property<int>("Id")
@@ -435,6 +461,15 @@ namespace FınalProjectBeginning.Migrations
                     b.Navigation("CetUser");
                 });
 
+            modelBuilder.Entity("FınalProjectBeginning.Models.Kulsayfasi", b =>
+                {
+                    b.HasOne("FınalProjectBeginning.Models.CetUser", "CetUser")
+                        .WithMany("Kulsayfasis")
+                        .HasForeignKey("CetUserId");
+
+                    b.Navigation("CetUser");
+                });
+
             modelBuilder.Entity("FınalProjectBeginning.Models.Menu", b =>
                 {
                     b.HasOne("FınalProjectBeginning.Models.Event", "Event")
@@ -541,6 +576,8 @@ namespace FınalProjectBeginning.Migrations
                     b.Navigation("Evaluations");
 
                     b.Navigation("Events");
+
+                    b.Navigation("Kulsayfasis");
 
                     b.Navigation("Participates");
 
