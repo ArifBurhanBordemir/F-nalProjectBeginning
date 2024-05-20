@@ -9,6 +9,8 @@ using FinalProjectBeginning.Data;
 using FınalProjectBeginning.Models;
 using Microsoft.SqlServer.Management.XEvent;
 using Microsoft.AspNetCore.Identity;
+using FınalProjectBeginning.Migrations;
+using System.Security.Claims;
 
 namespace FınalProjectBeginning.Controllers
 {
@@ -27,11 +29,39 @@ namespace FınalProjectBeginning.Controllers
         }
 
         // GET: Posts
+        //public async Task<IActionResult> Index()
+        //{
+        //    var applicationDbContext = _context.Kulsayfasis.Include(p => p.CetUser);
+        //    return View(await applicationDbContext.ToListAsync());
+
+
+
+
+
+        //}
+
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Kulsayfasis.Include(p => p.CetUser);
-            return View(await applicationDbContext.ToListAsync());
+            var currentUserId = User.Identity.Name;
+
+            var applicationDbContext = await _context.Kulsayfasis
+                .Include(k => k.CetUser)
+                .Select(k => new Kulsayfasi
+                {
+                    // Copy other properties as needed
+                    Id = k.Id,
+                    Description = k.Description,
+                    CetUser = k.CetUser,
+                    IsFollowedByCurrentUser = _context.Takip_Takipcis
+                        .Any(tt => tt.TakipEdenUserId == currentUserId && tt.TakipEdilenKisiId == k.CetUser.Id)
+                })
+                .ToListAsync();
+
+            
+
+            return View(applicationDbContext);
         }
+
 
         // GET: Posts/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -57,6 +87,7 @@ namespace FınalProjectBeginning.Controllers
         public IActionResult Create()
         {
             ViewData["CetUserId"] = new SelectList(_context.CetUsers, "Id", "Id");
+            
             return View();
         }
 
@@ -65,9 +96,21 @@ namespace FınalProjectBeginning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormFile postImage, [Bind("Id,Description,CetUserId")] Kulsayfasi kulsayfasi)
+        public async Task<IActionResult> Create(IFormFile kulsayImage, [Bind("Id,Description,CetUserId")] Kulsayfasi kulsayfasi)
         {
-            var filename = postImage.FileName;
+            //var existingData = _context.Kulsayfasis.FirstOrDefault(k => k.CetUserId == kulsayfasi.CetUserId);
+
+            
+            //if (existingData != null)
+            //{
+            //    // Kullanıcı zaten bir veri oluşturmuş, yeni bir oluşturma işlemine izin verme
+            //    //TempData["Message"] = "You have already created a data entry.";
+            //    //return RedirectToAction(nameof(Index));
+
+            //    return Unauthorized();
+            //}
+
+            var filename = kulsayImage.FileName;
             var extension = Path.GetExtension(filename);
             var newfilename = Guid.NewGuid().ToString().ToLower().Replace("-", "") + extension;
 
@@ -75,12 +118,12 @@ namespace FınalProjectBeginning.Controllers
 
             using (var stream = new FileStream(path, FileMode.CreateNew))
             {
-                await postImage.CopyToAsync(stream);
+                await kulsayImage.CopyToAsync(stream);
             }
             kulsayfasi.ImageName = newfilename;
             _context.Add(kulsayfasi);
 
-            var CetUser = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            var CetUser = _context.Users.FirstOrDefault(u=>u.UserName == User.Identity.Name);
             kulsayfasi.CetUserId = CetUser.Id;
             _context.Kulsayfasis.Add(kulsayfasi);
             await _context.SaveChangesAsync();
@@ -164,7 +207,7 @@ namespace FınalProjectBeginning.Controllers
         // POST: Posts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var kulsayfasi = await _context.Kulsayfasis.FindAsync(id);
             if (kulsayfasi != null)
@@ -212,7 +255,24 @@ namespace FınalProjectBeginning.Controllers
             var posts = cetUser.Posts; // Kullanıcının postlarını alın
             return View(posts);
         }
-    
+
+
+
+        public IActionResult Search(string searchString)
+        {
+            var users = from u in _context.Kulsayfasis.Include(k => k.CetUser)
+                        select u;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                //users = users.Where(s => s.CetUser.Name.Contains(searchString) || s.CetUser.Surname.Contains(searchString));
+
+                // Kullanıcı adı veya soyadı arama metni ile başlıyorsa
+                users = users.Where(s => s.CetUser.Name.StartsWith(searchString) || s.CetUser.Surname.StartsWith(searchString));
+            }
+
+            return View(users.ToList());
+        }
 
 
 
@@ -228,14 +288,142 @@ namespace FınalProjectBeginning.Controllers
 
 
 
-
-
-
-    private bool KulsayfasiExists(int id)
+        private bool KulsayfasiExists(int id)
 
     {
         return _context.Kulsayfasis.Any(e => e.Id == id);
     }
 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //[HttpPost]
+        //public IActionResult FollowUser([FromBody] string userId) 
+        //{
+        //    var currentUser = _context.Users.FirstOrDefault(u => u.Id == User.Identity.Name);
+        //    var followedUser = _context.Users.FirstOrDefault(u => u.Id == userId);
+
+        //    if (currentUser != null && followedUser != null)
+        //    {
+        //        var existingRelationship = _context.Takip_Takipcis.FirstOrDefault(r => r.TakipEdenUserId == currentUser.Id && r.TakipEdilenKisiId == followedUser.Id);
+
+        //        if (existingRelationship != null)
+        //        {
+        //            _context.Takip_Takipcis.Remove(existingRelationship);
+        //            _context.SaveChanges();
+        //            return Json("unfollowed");
+        //        }
+        //        else
+        //        {
+        //            _context.Takip_Takipcis.Add(new Takip_Takipci { TakipEdenUserId = currentUser.Id, TakipEdilenKisiId = followedUser.Id });
+        //            _context.SaveChanges();
+        //            return Json("followed");
+        //        }
+        //    }
+
+        //    return Json("error");
+        //}
+
+
+
+        [HttpPost]
+        public IActionResult FollowUser(string userId)
+        {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var currentUserExists = _context.CetUsers.Any(u => u.Id == currentUserId);
+            var targetUserExists = _context.CetUsers.Any(u => u.Id == userId);
+
+            if (!currentUserExists || !targetUserExists)
+            {
+                return Json("user_not_found");
+            }
+
+            var existingFollow = _context.Takip_Takipcis
+                .FirstOrDefault(tt => tt.TakipEdenUserId == currentUserId && tt.TakipEdilenKisiId == userId);
+
+            if (existingFollow == null)
+            {
+                var follow = new Takip_Takipci
+                {
+                    TakipEdenUserId = currentUserId,
+                    TakipEdilenKisiId = userId
+                };
+                _context.Takip_Takipcis.Add(follow);
+                _context.SaveChanges();
+            }
+
+            return Json("followed");
+        }
+
+        [HttpPost]
+        public IActionResult UnfollowUser(string userId)
+        {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var currentUserExists = _context.CetUsers.Any(u => u.Id == currentUserId);
+            var targetUserExists = _context.CetUsers.Any(u => u.Id == userId);
+
+            if (!currentUserExists || !targetUserExists)
+            {
+                return Json("user_not_found");
+            }
+
+            var follow = _context.Takip_Takipcis
+                .FirstOrDefault(tt => tt.TakipEdenUserId == currentUserId && tt.TakipEdilenKisiId == userId);
+
+            if (follow != null)
+            {
+                _context.Takip_Takipcis.Remove(follow);
+                _context.SaveChanges();
+            }
+
+            return Json("unfollowed");
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
 }

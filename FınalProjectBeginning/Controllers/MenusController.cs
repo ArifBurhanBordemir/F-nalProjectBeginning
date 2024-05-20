@@ -46,10 +46,12 @@ namespace FınalProjectBeginning.Controllers
         }
 
         // GET: Menus/Create
-        public IActionResult Create(int? eventId)
+        public async Task<IActionResult> Create(int? eventId)
         {
             ViewData["EventId"] = new SelectList(_context.Events, "Id", "Id",eventId);
-
+            //var Event = await _context.Events.FindAsync(id);
+            //var userID = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
+            //if (menu.Event.CetUserId != userID) { return Unauthorized(); }
             return View();
         }
 
@@ -73,6 +75,7 @@ namespace FınalProjectBeginning.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(menu);
         }
 
@@ -89,6 +92,8 @@ namespace FınalProjectBeginning.Controllers
             {
                 return NotFound();
             }
+            var userID = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
+            if (menu.Event.CetUserId != userID) { return Unauthorized(); }
             return View(menu);
         }
 
@@ -141,7 +146,8 @@ namespace FınalProjectBeginning.Controllers
             {
                 return NotFound();
             }
-
+            var userID = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
+            if (menu.Event.CetUserId != userID) { return Unauthorized(); }
             return View(menu);
         }
 

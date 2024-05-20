@@ -1,6 +1,14 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<CetUser> SignInManager
 @inject UserManager<CetUser> UserManager
+@* @inject KulsayfasiViewComponent KulsayfasiComponent *@
+@* 
+@await KulsayfasiComponent.InvokeAsync() *@
+
+@{
+    var userId = UserManager.GetUserId(User);
+    
+}
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
@@ -8,8 +16,9 @@
     @* <li class="nav-item">
         <a  class="nav-link " asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
     </li> *@
+        
         <li class="nav-item">
-            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy" >Hello @User.Identity?.Name!</a>
+            <a class="nav-link " asp-area="" asp-controller="Kulsayfasis" asp-action="Details" asp-route-id="1">Hello @User.Identity?.Name!</a>
         </li>
     <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

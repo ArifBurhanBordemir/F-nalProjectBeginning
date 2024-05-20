@@ -62,7 +62,8 @@
     <a asp-action="Index">Back to List</a>
     <a href="~/menus/create?eventid=@Model.Id"><btn>Add menu</btn></a>
     <a href="~/Evaluations/create?eventid=@Model.Id"><btn>Add evaluation</btn></a>
- 
+    <a asp-action="Delete" asp-route-id="@Model?.Id">Delete</a>
+
 </div>
 
 

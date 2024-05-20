@@ -1,0 +1,53 @@
+﻿@model IEnumerable<FınalProjectBeginning.Models.Kulsayfasi>
+
+@{
+    ViewData["Title"] = "User Search";
+}
+
+<h1>User Search</h1>
+
+<form asp-action="Search" method="get">
+    <p>
+        Search by name: <input type="text" name="searchString" />
+        <input type="submit" value="Search" />
+    </p>
+</form>
+
+<table class="table text-white">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CetUser.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CetUser.Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CetUser.Email)                
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CetUser.Name)
+                    
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CetUser.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CetUser.Email)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

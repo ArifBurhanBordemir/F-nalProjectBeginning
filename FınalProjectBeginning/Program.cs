@@ -28,6 +28,8 @@ namespace FınalProjectBeginning
             //         policy => policy.RequireRole("Restoran"));
             //});
 
+            //builder.Services.AddScoped<KulsayfasiViewComponent>();
+
 
             var app = builder.Build();
 

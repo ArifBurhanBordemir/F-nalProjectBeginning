@@ -30,9 +30,6 @@ namespace FinalProjectBeginning.Controllers
             var sortedEvents = _context.Events.OrderByDescending(b => b.ReadCount).ToList();
             var applicationDbContext = _context.Events.Include(a => a.CetUser);
             return View(/*(sortedEvents, */await applicationDbContext.ToListAsync());
-
-
-
         }
 
         public async Task<IActionResult> Privacy()
@@ -56,10 +53,10 @@ namespace FinalProjectBeginning.Controllers
 
 
 
-        [Authorize(Roles = "Administrator")]
-        public ActionResult Admin()
-        {
-            return View();
-        }
+        //[Authorize(Roles = "Administrator")]
+        //public ActionResult Admin()
+        //{
+        //    return View();
+        //}
     }
 }

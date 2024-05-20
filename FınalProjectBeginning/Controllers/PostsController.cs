@@ -78,15 +78,6 @@ namespace FınalProjectBeginning.Controllers
             _context.Posts.Add(post);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-
-            if (ModelState.IsValid)
-            {
-                _context.Add(post);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CetUserId"] = new SelectList(_context.CetUsers, "Id", "Id", post.CetUserId);
-            return View(post);
         }
 
         // GET: Posts/Edit/5
@@ -102,6 +93,9 @@ namespace FınalProjectBeginning.Controllers
             {
                 return NotFound();
             }
+            var userID = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
+            if (post.CetUserId != userID) { return Unauthorized(); }
+
             ViewData["CetUserId"] = new SelectList(_context.CetUsers, "Id", "Id", post.CetUserId);
             return View(post);
         }
@@ -157,6 +151,8 @@ namespace FınalProjectBeginning.Controllers
             {
                 return NotFound();
             }
+            var userID = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
+            if (post.CetUserId != userID) { return Unauthorized(); }
 
             return View(post);
         }

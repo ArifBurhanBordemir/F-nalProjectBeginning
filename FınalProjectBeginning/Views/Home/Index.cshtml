@@ -1,17 +1,15 @@
 ﻿@model IEnumerable<FınalProjectBeginning.Models.Event>
-
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<CetUser> SignInManager
+@inject UserManager<CetUser> UserManager
 @{
     ViewData["Title"] = "Sıralanmış Eventler";
-}
+    }
+
 
 <h1>Sıralanmış Eventler or Ana Sayfa</h1>
 
-@* <div class="bg-box">
-    <img src="~/images/hero-bg.jpg" alt=""></img>
 
-</div> *@
 
 <table class="table text-white">
     <thead>
@@ -62,10 +60,13 @@
             </td>
                 <td>@Html.DisplayFor(modelItem => item.ReadCount)</td>
             <td>
-                    
-                <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-controller="Events" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Restoran") && item.CetUserId == UserManager.GetUserId(User))
+                {
+                <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                <a asp-controller="Events" asp-action="Details" asp-route-id="@item.Id">Details</a> 
                 <a asp-controller="Events" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                }
+
             </td>
         </tr>
 }
@@ -101,16 +102,8 @@
                                         @item.Body
                                     </p>
                                     <div >
-                                        
                                         <a href="~/Evaluations/create?eventid=@item.Id"><btn>Add evaluation</btn></a>
                                         <btn>Katil</btn>
-                                        @* <a></a>
-                                        <form asp-controller="Events" asp-action="Participate" method="post">
-                                            <input type="hidden" name="eventId" value="@item.Id" />
-                                            <button type="submit">Katıl</button>
-                                        </form> *@
-                                        
-                                       
                                     </div>
                                 </div>
                             </div>

@@ -113,50 +113,8 @@ namespace FınalProjectBeginning.Controllers
             _context.Events.Add(@event);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-
-            //if (ModelState.IsValid)
-            //{
-            //    _context.Add(@event);
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //ViewData["CetUserId"] = new SelectList(_context.Users, "Id", "Id", @event.CetUserId);
-            //return View(@event);
         }
 
-        ////public async Task<IActionResult> Create([Bind("Id,Title,Body,CreatedDate,CetUserId")] Blog blog)
-        ////{
-        ////    blog.CreatedDate = DateTime.Now;
-        ////    var CetUser = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
-        ////    blog.CetUserId = CetUser.Id;
-        ////    _context.Blogs.Add(blog);
-        ////    await _context.SaveChangesAsync();
-        ////    return RedirectToAction(nameof(Index));
-
-        ////    if (ModelState.IsValid)
-        ////    {
-        ////        _context.Add(blog);
-        ////        await _context.SaveChangesAsync();
-        ////        return RedirectToAction(nameof(Index));
-        ////    }
-        ////    ViewData["CetUserId"] = new SelectList(_context.Users, "Id", "Id", blog.CetUserId);
-        ////    return View(blog);
-        ////}
-
-
-        //public async Task<IActionResult> Create([Bind("Id,Title,Body,CreatedDate,EventDate,EventLocation,CetUserId")] Event event)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        blog.CreatedDate = DateTime.Now;
-        //        _context.Add(@event);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["CetUserId"] = new SelectList(_context.Set<CetUser>(), "Id", "Id", @event.CetUserId);
-        //    return View(@event);
-        //}
-        // GET: Events/Edit/5
 
         [Authorize]
         public async Task<IActionResult> Edit(int? id)

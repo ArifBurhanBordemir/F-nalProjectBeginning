@@ -2,33 +2,33 @@
 
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<CetUser> SignInManager
+@inject UserManager<CetUser> UserManager
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
-
+@* @section Styles {
+    <style>
+        body {
+            
+            background-color:black;
+            
+        }
+    </style>
+}
+ *@
 @if (SignInManager.IsSignedIn(User) && User.IsInRole("Restoran"))
 {
     <p>
         <a asp-action="Create">Create New</a>
     </p>
 }
-else
-{
-    <p>To Create a event, you must be corrected via Restoran</p>
-}
-@* 
-<div class="bg-box">
-    <img src="~/images/hero-bg.jpg" alt=""></img>
 
-</div> *@
 <section class="food_section layout_padding">
-    <div class="container">
+    @* <div class="container"> *@
         @* <div class="heading_container heading_center">
             
         </div> *@
-        <div class="filters-content">
+        @* <div class="filters-content"> *@
             <div class="row grid">
                 @foreach (var item in Model)
                 {
@@ -44,24 +44,22 @@ else
                                 <div class="detail-box">
                                     <h5>
                                         @item.Title
-                                        @item.CetUser.Name
+                                       
                                     </h5>
+                                    <h4>
+                                        @item.CetUser.Name
+                                    </h4>
                                     <p>
                                         @item.Body
                                     </p>
-                                    <div>
-
-                                        
+                                    <div class="options">
+                                        <a href="~/Evaluations/create?eventid=@item.Id"><btn>Add evaluation</btn></a>
                                         <btn>Katil</btn>
-
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                }
-            </div>
-        </div>
-    </div>
+                }            
+         </div>
 </section>

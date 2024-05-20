@@ -93,6 +93,8 @@ namespace FınalProjectBeginning.Controllers
             {
                 return NotFound();
             }
+            var userID = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
+            if (evaluation.CetUserId != userID) { return Unauthorized(); }
             ViewData["CetUserId"] = new SelectList(_context.CetUsers, "Id", "Id", evaluation.CetUserId);
             ViewData["EventId"] = new SelectList(_context.Events, "Id", "Id", evaluation.EventId);
             return View(evaluation);
@@ -151,6 +153,8 @@ namespace FınalProjectBeginning.Controllers
             {
                 return NotFound();
             }
+            var userID = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
+            if (evaluation.CetUserId != userID) { return Unauthorized(); }
 
             return View(evaluation);
         }
