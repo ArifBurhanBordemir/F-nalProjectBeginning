@@ -1,11 +1,6 @@
-﻿@* @model int?
+﻿@model Kulsayfasi
+@{
+    var cetUserName = Model?.CetUser?.Name;
+}
 
-@if (Model != null)
-{
-    <a class="nav-link" asp-area="" asp-controller="Kulsayfasis" asp-action="Details" asp-route-id="@Model">Hello @User.Identity?.Name!</a>
-}
-else
-{
-    <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
-}
- *@
+<a class="nav-link" asp-controller="Kulsayfasis" asp-action="Details" asp-route-id="@Model?.Id">Hello @* @User.Identity?.Name! *@ @cetUserName</a>

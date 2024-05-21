@@ -6,6 +6,9 @@
 @{
     ViewData["Title"] = "Index";
 }
+@{
+    var kulsayfasiId = ViewBag.KulsayfasiId;
+}
 @section Styles {
     <style class="sub_page">
         body {
@@ -15,30 +18,13 @@
         }
     </style>
 }
-@* @foreach (var item in Model)
-{
-    @if (item.CetUser.Id == UserManager.GetUserId(User))
-    {
-        <h1>Index</h1>
 
-        
-    }
-    else
-    {
-        <h1>Index</h1>
-
-        <p>
-            <a asp-action="Create">Create New</a>
-        </p>
-    }
-
-} *@
 <h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table text-white">
+<table class="table text-black">
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.Description)</th>
@@ -108,7 +94,7 @@
                             <div>
                                 <div class="img-box">
                                     <a asp-controller="Kulsayfasis" asp-action="Details" asp-route-id="@item.Id">
-                                        <img src="~/images/@item.ImageName" alt="" class="img-circle img-fluid">
+                                        <img src="images/@item.ImageName" alt="">
                                     </a>
                                 </div>
                                 <div class="detail-box">
@@ -123,15 +109,11 @@
                                     </p>
                                     <div>
 
-                                        @* <a href="~/Evaluations/create?eventid=@item.Id"><btn>Add evaluation</btn></a> *@
+                                        
                                         <button >
                                            Takip et
                                         </button>
-                                        @* <a></a>
-                                        <form asp-controller="Events" asp-action="Participate" method="post">
-                                        <input type="hidden" name="eventId" value="@item.Id" />
-                                        <button type="submit">Katıl</button>
-                                        </form> *@
+                                        
 
 
                                     </div>
@@ -185,54 +167,35 @@
     </script>
 }
 
-@* @section Scripts {
-    <script>
-        function getAntiForgeryToken() {
-            return $('input[name="__RequestVerificationToken"]').val();
-        }
-        $(document).ready(function () {
-            $('[id^=followButton_]').each(function () {
-                var userId = this.id.split('_')[1];
-                var button = this;
-                updateFollowStatus(userId, button); // Başlangıç durumunu kontrol et
-            });
-        });
 
-        // Takip durumunu güncelleyen fonksiyon
-        function updateFollowStatus(userId, button) {
-            $.ajax({
-                type: 'GET',
-                url: '/FollowStatus?userId=' + userId,
-                success: function (data) {
-                    if (data.IsFollowing) {
-                        $('#followButtonText_' + userId).text("Takip Ediliyor");
-                    } else {
-                        $('#followButtonText_' + userId).text("Takip Et");
-                    }
+
+
+<section class="food_section layout_padding">
+    <div class="container">
+
+        <div class="filters-content">
+            <div class="row grid">
+                @foreach (var item in Model)
+                {
+                    <div class="col-sm-6 col-lg-4 all pizza">
+                        <div class="box">
+                            <div>
+                                @* <div class="img-box">
+                            <a asp-controller="Posts" asp-action="Details" asp-route-id="@item.Id">
+                            <img src="images/@item.ImageName" alt="" >
+                            </a> *@
+                                <a asp-controller="Posts" asp-action="Details" asp-route-id="@item.Id">
+                                    <img src="images/@item.ImageName" width="100%" height="250px" alt="">
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+
                 }
-            });
-        }
 
-        // Takip durumunu değiştiren fonksiyon
-        function toggleFollow(userId, button) {
-            var isFollowing = $('#followButtonText_' + userId).text() === "Takip Ediliyor";
-            var url = isFollowing ? '/Kulsayfasis/UnfollowUser' : '/Kulsayfasis/FollowUser';
-
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: {
-                    userId: userId,
-                    __RequestVerificationToken: getAntiForgeryToken()
-                },
-                success: function (data) {
-                    if (data === "followed") {
-                        $('#followButtonText_' + userId).text("Takip Ediliyor");
-                    } else if (data === "unfollowed") {
-                        $('#followButtonText_' + userId).text("Takip Et");
-                    }
-                }
-            });
-        }
-    </script>
-} *@
+            </div>
+        </div>
+    </div>
+</section>

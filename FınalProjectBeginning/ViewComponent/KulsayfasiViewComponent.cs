@@ -1,40 +1,30 @@
-﻿//using Microsoft.AspNetCore.Identity;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.EntityFrameworkCore;
-//using System.Threading.Tasks;
-//using FinalProjectBeginning.Data;
-//using FınalProjectBeginning.Models;
-//using Microsoft.AspNetCore.Identity;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.EntityFrameworkCore;
+﻿// ViewComponent
+using FinalProjectBeginning.Data;
+using FınalProjectBeginning.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
-//public class KulsayfasiViewComponent : ViewComponent
-//{
-//    private readonly UserManager<CetUser> _userManager;
-//    private readonly ApplicationDbContext _context;
+public class KulsayfasiViewComponent : ViewComponent
+{
+    private readonly ApplicationDbContext _context;
+    private readonly UserManager<CetUser> _userManager;
 
-//    public KulsayfasiViewComponent(UserManager<CetUser> userManager, ApplicationDbContext context)
-//    {
-//        _userManager = userManager;
-//        _context = context;
-//    }
+    public KulsayfasiViewComponent(ApplicationDbContext context, UserManager<CetUser> userManager)
+    {
+        _context = context;
+        _userManager = userManager;
+    }
 
-//    public async Task<IViewComponentResult> InvokeAsync()
-//    {
-//        if (HttpContext.User != null && HttpContext.User.Identity.IsAuthenticated)
-//        {
-//            var user = await _userManager.GetUserAsync(HttpContext.User);
-//            var userId = await _userManager.GetUserIdAsync(user);
-//            var kulsayfasi = await _context.Kulsayfasis.FirstOrDefaultAsync(k => k.CetUserId == userId);
-//            return View(kulsayfasi);
-//        }
-//        else
-//        {
-//            // Kullanıcı oturum açmamış veya yetkilendirilmemişse, uygun bir işlem yapabilirsiniz.
-//            // Örneğin, kullanıcıyı oturum açma sayfasına yönlendirebilirsiniz.
-//            return Content("Kullanıcı oturum açmamış veya yetkilendirilmemiş.");
-//        }
-//    }
-
-
-//}
+    public async Task<IViewComponentResult> InvokeAsync()
+    {
+        var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId != null)
+        {
+            var kulsayfasi = await _context.Kulsayfasis.FirstOrDefaultAsync(k => k.CetUserId == userId);
+            return View(kulsayfasi);
+        }
+        return View(null);
+    }
+}

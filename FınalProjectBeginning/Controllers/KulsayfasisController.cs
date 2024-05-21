@@ -11,6 +11,7 @@ using Microsoft.SqlServer.Management.XEvent;
 using Microsoft.AspNetCore.Identity;
 using FınalProjectBeginning.Migrations;
 using System.Security.Claims;
+using Microsoft.SqlServer.Management.Smo;
 
 namespace FınalProjectBeginning.Controllers
 {
@@ -29,26 +30,17 @@ namespace FınalProjectBeginning.Controllers
         }
 
         // GET: Posts
-        //public async Task<IActionResult> Index()
-        //{
-        //    var applicationDbContext = _context.Kulsayfasis.Include(p => p.CetUser);
-        //    return View(await applicationDbContext.ToListAsync());
-
-
-
-
-
-        //}
 
         public async Task<IActionResult> Index()
         {
+            
             var currentUserId = User.Identity.Name;
 
             var applicationDbContext = await _context.Kulsayfasis
                 .Include(k => k.CetUser)
                 .Select(k => new Kulsayfasi
                 {
-                    // Copy other properties as needed
+                    
                     Id = k.Id,
                     Description = k.Description,
                     CetUser = k.CetUser,
@@ -58,6 +50,7 @@ namespace FınalProjectBeginning.Controllers
                 .ToListAsync();
 
             
+
 
             return View(applicationDbContext);
         }
@@ -74,6 +67,10 @@ namespace FınalProjectBeginning.Controllers
             var kulsayfasi = await _context.Kulsayfasis
                 .Include(p => p.CetUser)
                 .ThenInclude(u => u.Posts)
+                .Include(k => k.CetUser)
+                .ThenInclude(c => c.TakipEdilenKisis)
+                .Include(k => k.CetUser)
+                .ThenInclude(c => c.TakipEdenUsers)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (kulsayfasi == null)
             {
@@ -133,7 +130,8 @@ namespace FınalProjectBeginning.Controllers
         }
 
         // GET: Posts/Edit/5
-        public async Task<IActionResult> Edit(string? id)
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -218,21 +216,6 @@ namespace FınalProjectBeginning.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         public async Task<IActionResult> MyPosts()
