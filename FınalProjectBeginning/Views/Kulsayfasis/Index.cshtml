@@ -18,6 +18,20 @@
         }
     </style>
 }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <style>
+        .food_section h2,
+        .food_section h5,
+        .food_section h4,
+        .food_section p,
+        .food_section btn {
+            color: #fff;
+        }
+    </style>
+</head>
 
 <h1>Index</h1>
 
@@ -95,6 +109,7 @@
                                 <div class="img-box">
                                     <a asp-controller="Kulsayfasis" asp-action="Details" asp-route-id="@item.Id">
                                         <img src="images/@item.ImageName" alt="">
+                                        <p>@item.ImageName</p>
                                     </a>
                                 </div>
                                 <div class="detail-box">
@@ -166,36 +181,3 @@
 
     </script>
 }
-
-
-
-
-<section class="food_section layout_padding">
-    <div class="container">
-
-        <div class="filters-content">
-            <div class="row grid">
-                @foreach (var item in Model)
-                {
-                    <div class="col-sm-6 col-lg-4 all pizza">
-                        <div class="box">
-                            <div>
-                                @* <div class="img-box">
-                            <a asp-controller="Posts" asp-action="Details" asp-route-id="@item.Id">
-                            <img src="images/@item.ImageName" alt="" >
-                            </a> *@
-                                <a asp-controller="Posts" asp-action="Details" asp-route-id="@item.Id">
-                                    <img src="images/@item.ImageName" width="100%" height="250px" alt="">
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-
-
-                }
-
-            </div>
-        </div>
-    </div>
-</section>

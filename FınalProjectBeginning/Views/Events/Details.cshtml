@@ -8,7 +8,7 @@
 
 <h1>Details</h1>
 
-<div>
+<div class="text-black">
     <h4>Event</h4>
     <hr />
     <dl class="row">
@@ -71,7 +71,7 @@
 <div>
     <h4>Event Menus</h4>
     <hr />
-    <ul>
+    <ul class="text-black">
         @foreach (var menu in Model.Menus)
         {
             <li>
@@ -83,3 +83,53 @@
 
         <div>@Model.CetUser.Posts</div>
 
+
+<section class="client_section layout_padding-bottom">
+    <div class="container">
+        <div class="heading_container heading_center psudo_white_primary mb_45">
+            <h2>
+                What Says Our Customers
+            </h2>
+        </div>
+        <div class="carousel-wrap row ">
+            <div class="owl-carousel client_owl-carousel owl-loaded owl-drag">
+
+
+                <div class="owl-stage-outer">
+                    <div class="owl-stage" style="transform: translate3d(-1440px, 0px, 0px); transition: all 0.25s ease 0s; width: 2880px;">
+                        @foreach (var item in Model.Evaluations)
+                        {
+                            <div class="owl-item cloned" style="width: 480px;">
+                                <div class="item">
+                                    <div class="box">
+                                        <div class="detail-box">
+                                            <p>
+                                                @item.Description
+                                            </p>
+                                            <h6>
+                                                @item.CetUser.Name
+                                            </h6>
+                                            <p>
+                                                @Model.Title
+                                            </p>
+                                        </div>
+                                        <div class="img-box">
+                                            <img src="~/images/@item.CetUser.Kulsayfasis.First().ImageName" alt="" class="box-img">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <div class="owl-nav disabled">
+                    <button type="button" role="presentation" class="owl-prev"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+                    <button type="button" role="presentation" class="owl-next"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
+                </div>
+                <div class="owl-dots disabled">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

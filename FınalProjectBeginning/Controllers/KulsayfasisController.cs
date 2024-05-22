@@ -38,6 +38,7 @@ namespace FınalProjectBeginning.Controllers
 
             var applicationDbContext = await _context.Kulsayfasis
                 .Include(k => k.CetUser)
+                .ThenInclude(a=>a.Kulsayfasis)
                 .Select(k => new Kulsayfasi
                 {
                     
@@ -71,6 +72,7 @@ namespace FınalProjectBeginning.Controllers
                 .ThenInclude(c => c.TakipEdilenKisis)
                 .Include(k => k.CetUser)
                 .ThenInclude(c => c.TakipEdenUsers)
+
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (kulsayfasi == null)
             {

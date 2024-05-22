@@ -48,7 +48,13 @@ namespace FınalProjectBeginning.Controllers
             var @event = await _context.Events
                 .Include(b => b.CetUser)
                 .Include(c=>c.Menus)
-                
+                .Include(p => p.CetUser)
+                .ThenInclude(u => u.Kulsayfasis)
+                .Include(u => u.Evaluations)
+                .ThenInclude(u => u.CetUser)
+                .ThenInclude(u => u.Kulsayfasis)
+
+
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (@event == null)
             {

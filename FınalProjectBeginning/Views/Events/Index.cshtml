@@ -16,6 +16,21 @@
     </style>
 }
  *@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <style>
+        .food_section h2,
+        .food_section h5,
+        .food_section h4,
+        .food_section p,
+        .food_section btn {
+            color: #fff;
+        }
+    </style>
+</head>
+<h2>Etkinlikler</h2>
 @if (SignInManager.IsSignedIn(User) && User.IsInRole("Restoran"))
 {
     <p>

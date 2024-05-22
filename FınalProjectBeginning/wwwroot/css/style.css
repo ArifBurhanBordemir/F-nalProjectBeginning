@@ -2,6 +2,9 @@
 .settings_link .fa-cog {
     color: white;
 }
+
+
+
 body {
   font-family: "Open Sans", sans-serif;
   color: #0c0c0c;
@@ -10,7 +13,7 @@ body {
 }
 
 .layout_padding {
-  padding: 90px 0;
+  padding: 30px 0;
 }
 
 .layout_padding2 {
@@ -157,7 +160,7 @@ a:focus {
 .navbar-brand span {
   font-weight: bold;
   font-size: 32px;
-  color: #ffffff;
+  color:white;
 }
 
 .custom_nav-container {
@@ -170,7 +173,7 @@ a:focus {
 
 .custom_nav-container .navbar-nav .nav-item .nav-link {
   padding: 5px 20px;
-  color: #ffffff;
+  color: white;
   text-align: center;
   text-transform: uppercase;
   border-radius: 5px;
@@ -187,7 +190,7 @@ a:focus {
   height: auto;
   padding: 0;
   border: none;
-  color: #ffffff;
+  color: white;
   margin: 0 10px;
 }
 
@@ -340,7 +343,7 @@ a:focus {
 }
 
 .slider_section .detail-box {
-  color: #ffffff;
+  color: white;
   margin-bottom: 145px;
 }
 
@@ -358,7 +361,7 @@ a:focus {
   display: inline-block;
   padding: 10px 45px;
   background-color: #ffbe33;
-  color: #ffffff;
+  color: white;
   border-radius: 45px;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
@@ -386,7 +389,7 @@ a:focus {
 }
 
 .slider_section .carousel-indicators li {
-  background-color: #ffffff;
+  background-color: white;
   width: 12px;
   height: 12px;
   border-radius: 100%;
@@ -415,7 +418,7 @@ a:focus {
   border-radius: 5px;
   padding: 20px 15px;
   background-color: #222831;
-  color: #ffffff;
+  color: white;
 }
 
 .offer_section .box .img-box {
@@ -457,7 +460,7 @@ a:focus {
   display: inline-block;
   padding: 10px 30px;
   background-color: #ffbe33;
-  color: #ffffff;
+  color: white;
   border-radius: 45px;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
@@ -472,7 +475,7 @@ a:focus {
   width: 20px;
   height: auto;
   margin-left: 5px;
-  fill: #ffffff;
+  fill: white;
 }
 
 .offer_section .box:hover .img-box img {
@@ -502,7 +505,7 @@ a:focus {
 
 .food_section .filters_menu li.active {
   background-color: #222831;
-  color: #ffffff;
+  color: white;
 }
 
 .food_section .box {
@@ -510,7 +513,7 @@ a:focus {
   margin-top: 25px;
   background-color: #ffffff;
   border-radius: 10px;
-  color: #ffffff;
+  color: white;
   border-radius: 15px;
   overflow: hidden;
   background: linear-gradient(to bottom, #f1f2f3 25px, #222831 25px);
@@ -606,7 +609,7 @@ a:focus {
   display: inline-block;
   padding: 10px 55px;
   background-color: #ffbe33;
-  color: #ffffff;
+  color: white;
   border-radius: 45px;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
@@ -681,7 +684,7 @@ a:focus {
   padding-left: 25px;
   border: 1px solid #999;
   outline: none;
-  color: #000000;
+  color: #ffffff;
   border-radius: 5px;
   outline: none;
   -webkit-box-shadow: none;
@@ -849,7 +852,7 @@ a:focus {
   background-color: transparent;
   border: 1px solid #ccc;
   outline: none;
-  color: #000000;
+  color: #ffffff;
   border-radius: 5px;
 }
 

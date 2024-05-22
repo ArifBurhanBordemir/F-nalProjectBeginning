@@ -8146,7 +8146,8 @@ button.bg-dark:focus {
 
 .pb-3,
 .py-3 {
-  padding-bottom: 1rem !important;
+    padding-bottom: 1rem !important;
+    min-height: 865px;
 }
 
 .pl-3,
@@ -9845,7 +9846,7 @@ button.bg-dark:focus {
 }
 
 .text-white {
-  color: #fff !important;
+  color: #000 !important;
 }
 
 .text-primary {

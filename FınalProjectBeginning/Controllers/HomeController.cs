@@ -28,7 +28,10 @@ namespace FinalProjectBeginning.Controllers
 		public  async Task<IActionResult> Index()
         {
             var sortedEvents = _context.Events.OrderByDescending(b => b.ReadCount).ToList();
-            var applicationDbContext = _context.Events.Include(a => a.CetUser);
+            var applicationDbContext = _context.Events
+                .Include(a => a.CetUser)
+                .Include(b=>b.Evaluations)
+                .Include(z=>z.Evaluations).ThenInclude(c=>c.CetUser).ThenInclude(d=>d.Kulsayfasis);
             return View(/*(sortedEvents, */await applicationDbContext.ToListAsync());
         }
 
